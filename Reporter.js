@@ -1,29 +1,39 @@
+const fs = require("fs");
+const moment = require("moment");
+
 class Reporter {
 	_globalConfig = null;
 	_options = null;
 
-	constructor(globalConfig, options) {
+	constructor(globalConfig, { output, outputType, outputFile }) {
 		this._globalConfig = globalConfig;
-		this._options = options;
+		this._options = {
+			output: output || true,
+			outputType: outputType.toLowerCase() || "json",
+			outputFile: outputFile || "./status.json",
+		};
 	}
 
 	onRunComplete(contexts, results) {
-		console.log(`end all test`);
-		//console.log(`Custom reporter output: ${JSON.stringify(results, null, 2)}`);
-		/*console.log('GlobalConfig: ', this._globalConfig);
-		console.log('Options: ', this._options);*/
+		results.start = moment(results.startTime).format("YYYY-MM-DD HH:mm:ss");
+
+		if (this._options.output) {
+			switch (this._options.outputType) {
+				case "json":
+					fs.writeFileSync(
+						this._options.outputFile,
+						JSON.stringify(results, null, 4)
+					);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
+	/*
 	onRunStart(aggregatedResults, options) {
 		console.log(`start all test`);
-		/*console.log(
-			`onRunStart aggregatedResults: ${JSON.stringify(
-				aggregatedResults,
-				null,
-				2
-			)}`
-		);*/
-		/*console.log(`onRunStart options: ${JSON.stringify(options, null, 2)}`);*/
 	}
 
 	onTestStart(test) {
@@ -32,20 +42,6 @@ class Reporter {
 
 	onTestResult(test, testResult, aggregatedResults) {
 		console.log(`End a test file `);
-		//console.log(`onTestResult test: ${JSON.stringify(test, null, 2)}`);
-		/*
-				console.log(
-					`onTestResult testResult: ${JSON.stringify(testResult, null, 2)}`
-				);
-
-				console.log(
-					`onTestResult aggregatedResults: ${JSON.stringify(
-						aggregatedResults,
-						null,
-						2
-					)}`
-				);
-				*/
 	}
 
 	getLastError() {
@@ -53,6 +49,7 @@ class Reporter {
 			return new Error("my-custom-reporter.js reported an error");
 		}
 	}
+	*/
 }
 
 module.exports = Reporter;

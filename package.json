@@ -14,7 +14,7 @@
 	},
 	"homepage": "https://github.com/Runtheons/runtheons-jest-reporter#readme",
 	"dependencies": {
-
+		"moment": "^2.29.1",
 	},
 	"devDependencies": {},
 	"scripts": {}
