@@ -1,0 +1,22 @@
+{
+	"name": "@runtheons/jest-reporter",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Runtheons/runtheons-jest-reporter.git"
+	},
+	"author": "Zexal0807",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Runtheons/runtheons-jest-reporter/issues"
+	},
+	"homepage": "https://github.com/Runtheons/runtheons-jest-reporter#readme",
+	"dependencies": {
+
+	},
+	"devDependencies": {},
+	"scripts": {}
+
+}
