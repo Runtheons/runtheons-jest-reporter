@@ -21,9 +21,48 @@ If the aforementioned documentation is not clear or contains errors, please repo
 
 ## Installation
 
+1. `npm install https://github.com/Runtheons/runtheons-jest-reporter#v1.0.0` to add the package to the project
 
 # Use
 
+In your `package.json` add reporter in jest configuration
+
+```json
+{
+	"name": "my_app",
+	"version": "x.x.x",
+	"dependencies": {
+		...
+	},
+	"devDependencies": {
+		"jest": "^27.2.2"
+	},
+	"scripts": {
+		"test": "jest "
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"reporters": [
+			"default",
+      [
+				"./node_modules/@runtheons/jest-reporter",
+				{
+					"output": true,
+					"outputType": "json",
+					"outputFile": "./tests/status.json"
+				}
+			]
+		]
+	}
+}
+```
+
+As you can see, in reporter you have to specify the paramenter
+
+| Paramenter | Type    | Description                                               |
+| ---------- | ------- | --------------------------------------------------------- |
+| output     | boolean | If is `true` the reporter generate an output              |
+| outputType | string  | Available type: <ul><li>json</li></ul><br>Default: `json` |
+| outputFile | string  | Specify the output filepath <br> Default: `./status.json` |
 
 # Example of use
-
