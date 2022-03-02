@@ -6,6 +6,8 @@
   - [Installation](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#installation)
 - [Use](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#use)
 - [Improve Security](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#improve-security)
+- [Tester](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#tester)
+  - [Example of use](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#example-of-use)
 
 # Introduction
 
@@ -94,6 +96,41 @@ module.exports = {
         receiver: "example@email.com",
       },
     ],
+  ],
+};
+```
+
+# Tester
+
+You can use our tester script for test automatically
+
+Use `node_modules/@runtheons/jest-reporter/tester.js`, it run `npm run test` automatically
+
+By default it run test every day at 06:00:00, but you can specify the time using `process.env.EVERY`, it must be in cron format (See [node-schedule](https://www.npmjs.com/package/node-schedule) for more details)
+
+## Example of Use
+
+In example we create an `ecosystem.config.js` file for PM2, setting tester every 5min
+
+```javascript
+module.exports = {
+  apps: [
+    {
+      name: "Runtheons Backend App",
+      script: "index.js",
+      watch: true,
+      env: {
+        PORT: 3001,
+      },
+    },
+    {
+      name: "Tester",
+      script: "./node_modules/@runtheons/jest-reporter/tester.js",
+      watch: true,
+      env: {
+        EVERY: "*/5 * * * * *",
+      },
+    },
   ],
 };
 ```
