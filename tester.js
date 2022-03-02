@@ -1,6 +1,6 @@
 const schedule = require("node-schedule");
 
-const every = process.env.EVERY || "*/5 * * * * *" || "0 0 6 * * *"; // 06:00:00 of every days
+const every = process.env.EVERY || "0 0 6 * * *"; // 06:00:00 of every days
 
 schedule.scheduleJob("Runtheons Tester", every, async() => {
 	const util = require("util");
