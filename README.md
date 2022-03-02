@@ -5,7 +5,7 @@
   - [Prerequisites](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#prerequisites)
   - [Installation](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#installation)
 - [Use](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#use)
-- [Example of use](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#example-of-use)
+- [Improve Security](https://github.com/Runtheons/runtheons-jest-reporter/tree/main#improve-security)
 
 # Introduction
 
@@ -49,7 +49,10 @@ In your `package.json` add reporter in jest configuration
 				{
 					"output": true,
 					"outputType": "json",
-					"outputFile": "./tests/status.json"
+					"outputFile": "./tests/status.json",
+					"notify": true,
+					"nodemailer": { ... },
+					"receiver": "example@mail.com"
 				}
 			]
 		]
@@ -59,10 +62,38 @@ In your `package.json` add reporter in jest configuration
 
 As you can see, in reporter you have to specify the paramenter
 
-| Paramenter | Type    | Description                                               |
-| ---------- | ------- | --------------------------------------------------------- |
-| output     | boolean | If is `true` the reporter generate an output              |
-| outputType | string  | Available type: <ul><li>json</li></ul><br>Default: `json` |
-| outputFile | string  | Specify the output filepath <br> Default: `./status.json` |
+| Paramenter | Type    | Description                                                                                              |
+| ---------- | ------- | -------------------------------------------------------------------------------------------------------- |
+| output     | boolean | If is `true` the reporter generate an output                                                             |
+| outputType | string  | Available type: <ul><li>json</li></ul><br>Default: `json`                                                |
+| outputFile | string  | Specify the output filepath <br> Default: `./status.json`                                                |
+| notify     | boolean | If is `true` the reporter send an email notification                                                     |
+| nodemailer | object  | Nodemailer config <br> See [https://nodemailer.com/smtp/](https://nodemailer.com/smtp/) for more details |
+| receiver   | string  | Email where send notification                                                                            |
 
-# Example of use
+# Improve Security
+
+For security reason we advice set jest config in `jest.config.js` file, here an example
+
+```javascript
+const config = require("./config.js");
+
+module.exports = {
+  testMatch: ["**/*.test.js"],
+  testEnvironment: "node",
+  reporters: [
+    "default",
+    [
+      "./../node_modules/@runtheons/jest-reporter",
+      {
+        output: true,
+        outputType: "json",
+        outputFile: "./tests/status.json",
+        notify: true,
+        nodemailer: config.email,
+        receiver: "example@email.com",
+      },
+    ],
+  ],
+};
+```
